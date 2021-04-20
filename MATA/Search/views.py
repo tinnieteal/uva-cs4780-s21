@@ -10,7 +10,8 @@ def index(request):
 def result(request):
     query = request.POST.get('query')
     method = request.GET.getlist('method')
-    return render(request, 'search/result.html',{'query': query,'method': method})
+    allItem = item.objects.all()
+    return render(request, 'search/result.html',{'query': query,'method': method, 'allItem': allItem})
 
 
     # if query:
@@ -24,3 +25,28 @@ def result(request):
 
     #return render(request, 'Search/result.html',params)
     #return HttpResponse('this is search')
+
+    # list_doc = {}
+    # for q in query:
+    #     try:
+    #         for doc in indexFile[q]:
+    #             if doc['url'] in list_doc:
+    #                 list_doc[doc['url']]['score'] += doc['score']
+    #             else:
+    #                 list_doc[doc['url']] = doc
+    #     except:
+    #         continue
+    #
+    # # convert to list
+    # list_data = []
+    # for data in list_doc:
+    #     list_data.append(list_doc[data])
+    #
+    # # sorting list descending
+    # count = 1;
+    # for data in sorted(list_data, key=lambda k: k['score'], reverse=True):
+    #     y = json.dumps(data)
+    #     print(y)
+    #     if (count == n):
+    #         break
+    #     count += 1

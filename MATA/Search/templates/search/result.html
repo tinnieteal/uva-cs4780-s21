@@ -2,107 +2,265 @@
 
 <html lang="en">
 <head>
-  <title>MATA</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design for Bootstrap -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+    <title>MATA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design for Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">MATA</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="#">MATA</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item  active">
-        <a class="nav-link" href="/Search/">Search<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          More info
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-<!--      <li class="nav-item">-->
-<!--        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-<!--      </li>-->
-    </ul>
-  </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item  active">
+                <a class="nav-link" href="/Search/">Search<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    More info
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <!--      <li class="nav-item">-->
+            <!--        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+            <!--      </li>-->
+        </ul>
+    </div>
 </nav>
 
 
-     <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-     <title>Events</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-  <!-- Material Design for Bootstrap -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+    <title>Events</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <!-- Material Design for Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>MATA!</title>
-  </head>
-  <body>
-    {% load static %}
-    <div id="page-container">
-    <div id="content-wrap">
-    <div class="container text-dark mt-5">
-        <div class="row justify-content-md-center">
-          <div class="col-md-12 bg-grey p-3">
+    <style>
+             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+body{
+    background-color: #eaeaea;
+    font-family: 'Poppins',sans-serif;
+}
+.content-container{
+    display: flex;
+    margin: 0 auto;
+    background-color: #fff;
+    width: 60%;
+    margin-top: 100px;
+    border-radius: 5px;
+}
+.product-image-container{
+    padding-top: 80px;
+    margin: 0 2em; }
+.product-image-list{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0; }
+.product-image-list li{
+    margin: 0 5px;
+    border: 2px solid #eaeaea;
+    border-radius: 5px;
+    transition: all ease 0.25s;
+}
+.product-image-list li.item-selected{
+    box-shadow: 1px 1px 1px #888888;
+    border: 2px solid #e79631;
+    transition: all ease 0.25s;
+}
+.product-image-item{
+    max-width: 40px;
+    max-height: 40px;
+}
+.right-container{
+    margin: 1em; }
+.title{
+    margin: 0.5em 0 0 0; }
+.subtitle{
+    font-size: 1.25em; }
+.subtitle-container{
+    margin: 0.5em 0 0.5em 0;
+    opacity: 0.6; }
+.rating{
+    overflow: hidden;
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+}
+.rating-input{
+    float: right;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+}
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star{
+    background-position: 0 0;
+}
+.rating-star,
+.rating:hover .rating-star{
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('images/star.png') 0 -16px;
+}
+.reviews{
+    text-decoration: none; }
+a:hover.reviews{
+    color: #365afc;
+    text-decoration: underline; }
+.price{
+    color: #b32600;
+    font-size: 1.5em;
+    letter-spacing: -2px; }
+.select-dropdown{
+    max-width: 50px;
+    width: 100%; }
+.btn{
+    border: none;
+    outline: none;
+    background: linear-gradient(to bottom, #fcbc6e,#ffa12e);
+    border-radius: 5px;
+    padding: 8px 45px;
+    transition: all ease 0.25s;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn:hover{
+    background: linear-gradient(to bottom, #f59521,#fcae50);
+}
+@media only screen and (min-width:340px) and (max-width:600px){
+    .content-container{
+        width: 90%;
+        margin-top: 20px;
+        flex-direction: column;
+    }
+    .product-image-featured{
+        width: 300px;
+        height: 300px;
+    }
+}
 
+    </style>
+</head>
+<body>
+{% load static %}
+<div id="page-container">
+    <div id="content-wrap">
+        <div class="container text-dark mt-5">
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 bg-grey p-3">
                     <div class="jumbotron border shadow">
-                        <div class="row">
-                            <div class="col-md-8 offset-2">
-                                <h1>{{query}}</h1>
-                                <h1>{{method}}</h1>
-                            </div>
+                        <div class="col-md-8 offset-2">
+                            <h1>Result of searching: {{query}}</h1>
                         </div>
                     </div>
-          </div>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-    </div>
+        <div class="row justify-content-md-center">
+            {% block content %}
+            {% if allItem %}
+            <ul>
+            {% for item in allItem %}
+                <div class="content-container">
+                    <div class="left-container">
+                        <div class="product-image-container">
+                            <li class="item-selected">
+                                <img src="" class="product-image-item"
+                                     alt="Canon Image">
+                            </li>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+                        </div>
+                    </div>
+                    <div class="right-container">
+                        <div>
+                            <h1 class="title">{{ item.title}}</h1>
+                            <h2 class="subtitle subtitle-container">
+                                {{ item.asin}}
+                            </h2>
+                            <div>
+
+                                <a href="#" class="reviews">
+                                    986 customer reviews
+                                </a>
+
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="title">Product Description</h2>
+                            {{item.description}}
+                        </div>
+                    </div>
+                </div>
+        </ul>
+        {% endfor%}
+        {% endif %} {% endblock %}
+        </div>
+
     </div>
-    </div>
-  </body>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</div>
+</div>
+</body>
+</body>
 
 
 </html>
-
 
 
 

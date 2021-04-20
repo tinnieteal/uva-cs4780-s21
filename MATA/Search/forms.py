@@ -8,6 +8,9 @@ class itemForm(forms.ModelForm):
         fields = ('title', 'detail')
 
         widgets = {
-            'title': forms.TextInput(attrs={'class':'form-control'}),
-            'detail':forms.TextInput(attrs={'class':'form-control'}),
+            'asin' : forms.TextInput(attrs={'class':'form-control'}),
+            'reviewText' : forms.TextInput(attrs={'class':'form-control'}),
+            'description' : forms.TextInput(attrs={'class':'form-control'}),
+            'title' : forms.TextInput(attrs={'class':'form-control'}),
+            'image': forms.TextInput(attrs={'class':'form-control'}),
         }
