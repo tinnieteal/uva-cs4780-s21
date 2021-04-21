@@ -3,8 +3,10 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-from .models import item
+from .models import *
+
 def index(request):
+
     return render(request, 'search/index.html',)
 
 def result(request):
