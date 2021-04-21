@@ -12,19 +12,17 @@ def index(request):
 
 def result(request):
     query = request.POST.get('query')
-    method = request.GET.getlist('method')
 
     results = []
-    #loop through the tokenized & normalized query
+    #loop through the tokenized & normalized token of the query
     for token in nltk_process(query):
-        #
         indices = Index.objects.filter(word=token).all()
         if len(indices) == 0: 
             continue
         for mem in Membership.objects.filter(index=indices.first()).all():
             results.append(mem.item)
-            
-    return render(request, 'search/result.html',{'query': query,'method': method, 'allItem': results})
+
+    return render(request, 'search/result.html',{'query': query, 'allItem': results})
 
 
     # if query:

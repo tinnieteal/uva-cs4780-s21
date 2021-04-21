@@ -1,3 +1,5 @@
+#NLTK package for normalizaiton and tokenization 
+
 import nltk
 from nltk.tokenize import word_tokenize  
 from nltk.corpus import stopwords
@@ -6,6 +8,8 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.stem.porter import *
 
 p_stemmer = PorterStemmer()
+
+#Please use the NLTK Downloader to obtain the following resources for first time use
 # nltk.download('wordnet')
 # nltk.download('stopwords')
 
