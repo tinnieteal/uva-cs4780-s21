@@ -4,6 +4,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 from .models import *
+from .utils import *
 
 def index(request):
 
@@ -12,8 +13,20 @@ def index(request):
 def result(request):
     query = request.POST.get('query')
     method = request.GET.getlist('method')
-    allItem = item.objects.all()
-    return render(request, 'search/result.html',{'query': query,'method': method, 'allItem': allItem})
+
+    results = []
+    for token in tokenize(query):
+        indices = Index.objects.filter(word=token).all()
+        if len(indices) == 0: 
+            continue
+        for mem in Membership.objects.filter(index=indices.first()).all():
+            results.append(mem.item)
+        
+        # print()
+        # results += indices.first().items
+    # print(results)
+    # allItem = Item.objects.all()
+    return render(request, 'search/result.html',{'query': query,'method': method, 'allItem': results})
 
 
     # if query:

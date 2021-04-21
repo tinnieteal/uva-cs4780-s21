@@ -3,13 +3,13 @@ from .models import *
 # Register your models here.
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('asin', 'title','description')
+    list_display = ('asin', 'title','description','image')
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('content', 'item')
 
 class IndexAdmin(admin.ModelAdmin):
-    list_display = ('word', 'des_tf', 'title_tf', 'review_tf')
+    list_display = ('word', 'des_tf', 'title_tf', 'review_tf', 'get_items')
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('index', 'item', 'des_df', 'title_df', 'review_df')

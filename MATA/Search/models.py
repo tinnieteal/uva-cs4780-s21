@@ -27,20 +27,12 @@ class Index(models.Model):
     def __str__(self):
         return self.word
 
+    def get_items(self):
+        return ",".join([str(p) for p in self.items.all()])
+
 class Membership(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     index = models.ForeignKey(Index, on_delete=models.CASCADE)
     des_df = models.IntegerField()
     title_df = models.IntegerField()
     review_df = models.IntegerField()
-
-
-
-
-
-
-
-
-
->>>>>>> database loaded and inverted index created
-
