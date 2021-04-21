@@ -15,17 +15,15 @@ def result(request):
     method = request.GET.getlist('method')
 
     results = []
-    for token in tokenize(query):
+    #loop through the tokenized & normalized query
+    for token in nltk_process(query):
+        #
         indices = Index.objects.filter(word=token).all()
         if len(indices) == 0: 
             continue
         for mem in Membership.objects.filter(index=indices.first()).all():
             results.append(mem.item)
-        
-        # print()
-        # results += indices.first().items
-    # print(results)
-    # allItem = Item.objects.all()
+            
     return render(request, 'search/result.html',{'query': query,'method': method, 'allItem': results})
 
 

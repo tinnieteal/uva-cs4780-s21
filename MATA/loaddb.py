@@ -15,15 +15,16 @@ with open('all_beauty.json', 'r') as f:
 
 index = {}
 
-#process 
+#loop through all items in dataset, assign fields correspondingly
 for item in data:
 	asin = item["asin"] 
 	description = item["description"][0] if len(item["description"]) != 0 else ""
 	title = item["title"] 
 	img = item["image"][0]
 
+	#update doc frequency for item title
 	freq_table = {}
-	for word in tokenize(title):
+	for word in nltk_process(title):
 		if word not in freq_table:
 			freq_table[word] = {
 			"des_freq":0,
@@ -32,7 +33,8 @@ for item in data:
 			}
 		freq_table[word]["title_freq"] += 1
 
-	for word in tokenize(description):
+	#update doc frequency for item description
+	for word in nltk_process(description):
 		if word not in freq_table:
 			freq_table[word] = {
 			"des_freq":0,
@@ -41,17 +43,21 @@ for item in data:
 			}
 		freq_table[word]["des_freq"] += 1
 	
-
+	#save all item info, except for review
 	item_obj = Item.objects.create(title=title, description=description, asin=asin, image=img)
 	item_obj.save()
 
+	#loop thorugh all reviews for each item
 	for review in item["reviewText"]:
+		#if no views are found, print "found empty review"
 		if review == None:
 			print("found empty review")
 			continue
+		#else, create review objects
 		review_obj = Review.objects.create(content=review, item=item_obj)
 
-		for word in tokenize(review):
+		#update doc frequency for item reviews
+		for word in nltk_process(review):
 			if word not in freq_table:
 				freq_table[word] = {
 				"des_freq":0,
@@ -60,6 +66,7 @@ for item in data:
 				}
 			freq_table[word]["review_freq"] += 1	
 
+		#save review objects
 		review_obj.save()
 
 	for word, freq_map in freq_table.items():
