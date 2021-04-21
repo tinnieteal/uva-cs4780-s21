@@ -209,7 +209,7 @@ a:hover.reviews{
                     <div class="left-container">
                         <div class="product-image-container">
                             <li class="item-selected">
-                                <img src="" class="product-image-item"
+                                <img src="{{ item.image}}" class="product-image-item"
                                      alt="Canon Image">
                             </li>
 
@@ -219,7 +219,7 @@ a:hover.reviews{
                         <div>
                             <h1 class="title">{{ item.title}}</h1>
                             <h2 class="subtitle subtitle-container">
-                                {{ item.asin}}
+                                <a target="_blank" href="https://www.amazon.com/dp/{{ item.asin}}">{{ item.asin}}</a>
                             </h2>
                             <div>
 
