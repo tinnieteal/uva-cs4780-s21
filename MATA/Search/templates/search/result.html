@@ -202,9 +202,9 @@ a:hover.reviews{
         </div>
         <div class="row justify-content-md-center">
             {% block content %}
-            {% if allItem %}
+            {% if results %}
             <ul>
-            {% for item in allItem %}
+            {% for item, reviews in results %}
                 <div class="content-container">
                     <div class="left-container">
                         <div class="product-image-container">
@@ -222,10 +222,12 @@ a:hover.reviews{
                                 <a target="_blank" href="https://www.amazon.com/dp/{{ item.asin}}">{{ item.asin}}</a>
                             </h2>
                             <div>
-
-                                <a href="#" class="reviews">
+                                {% for review in reviews %}
+                                <div > {{ review.content }} </div>
+                                {% endfor%}
+<!--                                 <a href="#" class="reviews">
                                     986 customer reviews
-                                </a>
+                                </a> -->
 
                             </div>
                         </div>
