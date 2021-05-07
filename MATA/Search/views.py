@@ -22,6 +22,14 @@ def result(request):
             results.append((mem.item, Review.objects.filter(item=mem.item)))
     return render(request, 'search/result.html',{'query': query, 'results': results})
 
+def detail(request):
+
+    return render(request, 'search/detail.html', )
+
+def about(request):
+
+    return render(request, 'search/about.html', )
+
     # if query:
     #     posts = item.objects.filter(title__icontains=q)
     # else:
