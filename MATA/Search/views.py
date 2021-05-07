@@ -12,9 +12,7 @@ def index(request):
 
 def result(request):
     query = request.POST.get('query')
-
     results = []
-    #reviews = []
     #loop through the tokenized & normalized token of the query
     for token in nltk_process(query):
         indices = Index.objects.filter(word=token).all()
@@ -22,9 +20,7 @@ def result(request):
             continue
         for mem in Membership.objects.filter(index=indices.first()).all():
             results.append((mem.item, Review.objects.filter(item=mem.item)))
-
     return render(request, 'search/result.html',{'query': query, 'results': results})
-
 
 def detail(request):
 
@@ -33,6 +29,7 @@ def detail(request):
 def about(request):
 
     return render(request, 'search/about.html', )
+
     # if query:
     #     posts = item.objects.filter(title__icontains=q)
     # else:
