@@ -99,9 +99,10 @@ for index_obj in Index.objects.all():
 	#loop through all membership objects, accumulate term freq
 	for mem_obj in Membership.objects.filter(index=index_obj).all():
 		des_tf += mem_obj.des_df
-		title_tf += mem_obj.title_df
+		title_tf += mem_obj.title_df	
 		review_tf += mem_obj.review_df
 		index_obj.items.add(mem_obj.item.pk)
+	# print( des_tf, title_tf, review_tf )
 
 	Index.objects.filter(pk=index_obj.pk).update(
 		des_tf = des_tf,

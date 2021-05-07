@@ -25,6 +25,7 @@ def result(request):
     return render(request, 'search/result.html',{'query': query, 'allItem': results})
 
 
+
     # if query:
     #     posts = item.objects.filter(title__icontains=q)
     # else:
