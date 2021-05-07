@@ -12,10 +12,10 @@ def index(request):
 
 def result(request):
     query = request.POST.get('query')
-
     results = []
     #loop through the tokenized & normalized token of the query
     for token in nltk_process(query):
+        indices = Index.objects.filter(word=token).all()
         if len(indices) == 0: 
             continue
         for mem in Membership.objects.filter(index=indices.first()).all():
