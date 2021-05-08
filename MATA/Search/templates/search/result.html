@@ -204,7 +204,7 @@ a:hover.reviews{
             {% block content %}
             {% if results %}
             <ul>
-            {% for item, reviews in results %}
+            {% for ranking_score, item, reviews in results %}
                 <div class="content-container">
                     <div class="left-container">
                         <div class="product-image-container">
@@ -218,6 +218,7 @@ a:hover.reviews{
                     <div class="right-container">
                         <div>
                             <h1 class="title">{{ item.title}}</h1>
+                            <h5>{{ ranking_score}}</h5>
                             <h2 class="subtitle subtitle-container">
                                 <a target="_blank" href="https://www.amazon.com/dp/{{ item.asin}}">{{ item.asin}}</a>
                             </h2>

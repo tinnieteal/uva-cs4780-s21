@@ -8,6 +8,7 @@ django.setup()
 from Search.models import * 
 from Search.utils import *
 
+
 #load dataset
 with open('all_beauty.json', 'r') as f:
 		data = json.load(f)
@@ -15,12 +16,16 @@ with open('all_beauty.json', 'r') as f:
 
 index = {}
 
+num_item = 0 
+item_length = 0
+
 #loop through all items in dataset, assign fields correspondingly
 for item in data:
 	asin = item["asin"] 
 	description = item["description"][0] if len(item["description"]) != 0 else ""
 	title = item["title"] 
 	img = item["image"][0]
+
 
 	#update doc frequency for item's title
 	freq_table = {}
@@ -49,17 +54,23 @@ for item in data:
 
 	total_review_wordcount = 0
 	#loop thorugh all the reviews for this item
+
+	review_wordcounts = []
+
 	for review in item["reviewText"]:
 		#if no reviews are found, print "found empty review"
 		if review == None:
 			print("found empty review")
 			continue
-		#else, create review objects
-		review_obj = Review.objects.create(content=review, item=item_obj)
-
+		#else, update review wordcount
 		tokenized_review = nltk_process(review)
+		review_wordcount = len(tokenized_review)
+
+		review_wordcounts.append(review_wordcount)
+
+		#update total review wordcount
 		total_review_wordcount += len(tokenized_review)
-		#update doc frequency for item reviews
+
 		for word in tokenized_review:
 			if word not in freq_table:
 				freq_table[word] = {
@@ -69,13 +80,19 @@ for item in data:
 				}
 			freq_table[word]["review_freq"] += 1	
 
-		#save review objects
-		review_obj.save()
-
 	# save all item info, except for review
 	item_obj = Item.objects.create(title=title, description=description, asin=asin, image=img,
 								   title_length=title_wordcount, desc_length=desc_wordcount, review_length=total_review_wordcount)
 	item_obj.save()
+
+	num_item += 1
+	item_length += (title_wordcount +  desc_wordcount + total_review_wordcount)
+
+	for review, review_wordcount in zip(item["reviewText"], review_wordcounts):
+		review_obj = Review.objects.create(content=review, item=item_obj,length=review_wordcount)
+		#save review objects
+		review_obj.save()
+
 
 	#loop through each item and its corresponding doc freq in the freq table
 	for word, freq_map in freq_table.items():
@@ -117,6 +134,11 @@ for index_obj in Index.objects.all():
 		title_tf = title_tf,
 		review_tf = review_tf
 		)
+
+
+print( "num_item: {} ".format(  num_item ) )
+print( "item length total: {} ".format(  item_length ) )
+print( "item length averge: {} ".format(  item_length / num_item ) )
 
 # print( len(Item.objects.all()) )
 # print( len(Review.objects.all()) )

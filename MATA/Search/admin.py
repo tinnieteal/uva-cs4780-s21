@@ -6,7 +6,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('asin', 'title','description','image')
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('content', 'item')
+    list_display = ('content', 'length')
 
 class IndexAdmin(admin.ModelAdmin):
     list_display = ('word', 'des_tf', 'title_tf', 'review_tf', 'get_items')

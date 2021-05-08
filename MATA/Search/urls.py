@@ -9,3 +9,4 @@ urlpatterns = [
                   path('result/', views.result,name='result'),
                   # path('detail/', views.detail,name='detail'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
