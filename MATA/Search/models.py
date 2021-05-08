@@ -8,9 +8,9 @@ class Item(models.Model):
     description = models.TextField()
     asin = models.CharField(max_length=10)
     image = models.TextField(max_length=500, default="")
-    title_length = models.IntegerField(default=0)
-    desc_length = models.IntegerField(default=0)
-    review_length = models.IntegerField(default=0)
+    # title_length = models.IntegerField(default=0)
+    # desc_length = models.IntegerField(default=0)
+    # review_length = models.IntegerField(default=0)
  
     def __str__(self):
         return self.asin

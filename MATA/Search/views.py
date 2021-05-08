@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-import numpy as np
 from .models import *
 from .utils import *
 
@@ -30,29 +29,27 @@ def result(request):
 
 
 
-def bmresult(request):
+def bm25(request, item_obj): 
     query = request.POST.get('query')
-
-    results = []
-    items = Item.object.all()
-    n = 1000  # Total number of items in the database
-    b = 0.75
-    k1 = 1.5
-    k2 = 0.5
+    score = 0
+    item_length = item_obj.des_length + item_obj.title_length + item_obj.review_length
 
     for token in nltk_process(query):
         indices = Index.objects.filter(word=token).all()
-        if len(indices) == 0:
-            continue
-        # the number of items containing the query token
-        n_q = indices.items.count()
-        # But it is difficult to find out how many titles/descriptions/reviews contain this token
-        # Calculate the inverse document frequency weight of the query token
-        idf_q = np.log((n-n_q+0.5)/(n_q+0.5) + 1)
-        for mem in Membership.objects.filter(index=indices.first()).all():
-            results.append((mem.item, Review.objects.filter(item=mem.item)))
+        num_doc = 0
+        if len(indices) != 0: 
+            num_doc = len(indices.first().items)
+        mems = Membership.objects.get(index=indices.first(), item=item_obj)
+
+        total_freq = mem.des_df + mem.title_df + mem.review_df
+
+        score += idf(num_doc) * (total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length /average_item_length))
+
 
     return render(request, 'search/result.html',{'query': query, 'results': results})
+
+def idf(num_doc):
+    return math.log( (num_items - num_doc + 0.5) / (num_doc + 0.5) + 1 )
 
     # # loop through the tokenized & normalized token of the query
     # for token in nltk_process(query):
