@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canon Product Card UI Design</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    
+    <div class="content-container">
+        <div class="left-container">
+            <div class="product-image-container">
+                <img class="product-image-featured" 
+                  id="featured" src="images/image-1.jpg"
+                  alt="Canon Image">
+                <ul class="product-image-list">
+                    <li class="item-selected">
+                        <img src="images/image-1.jpg" class="product-image-item"
+                        alt="Canon Image">
+                    </li>
+                    <li>
+                        <img src="images/image-2.jpg" class="product-image-item"
+                         alt="Canon Image">
+                    </li>
+                    <li>
+                        <img src="images/image-3.jpg" class="product-image-item"
+                         alt="Canon Image">
+                    </li>
+                    <li>
+                        <img src="images/image-4.jpg" class="product-image-item"
+                         alt="Canon Image">
+                        </li>
+                    <li>
+                        <img src="images/image-5.jpg" class="product-image-item"
+                         alt="Canon Image">
+                        </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-container">
+            <div>
+                <h1 class="title">Canon EOS M50 Cameras</h1>
+                <h2 class="subtitle subtitle-container">
+                    Mirrorless with EF-M 15-45 is STM Lens
+                </h2>
+                <div>
+            <span class="rating">
+                <input type="radio" class="rating-input"
+                 id="rating-input-1-5" name="rating-input-1"/>
+                <label for="rating-input-1-5" class="rating-star">
+                </label>
+                <input type="radio" class="rating-input"
+                 id="rating-input-1-4" name="rating-input-1"/>
+                <label for="rating-input-1-4" class="rating-star">
+                </label>
+                <input type="radio" class="rating-input"
+                 id="rating-input-1-3" name="rating-input-1"/>
+                <label for="rating-input-1-3" class="rating-star">
+                </label>
+                <input type="radio" class="rating-input"
+                 id="rating-input-1-2" name="rating-input-1"/>
+                <label for="rating-input-1-2" class="rating-star">
+                </label>
+                <input type="radio" class="rating-input"
+                 id="rating-input-1-1" name="rating-input-1"/>
+                <label for="rating-input-1-1" class="rating-star">
+                </label>
+            </span>
+            <span>|</span>
+            <span>
+                <a href="#" class="reviews">
+                    986 customer reviews
+                </a>
+            </span>
+          </div>
+         </div>
+        <span>
+            <p>Price: <span class="price">$650.00</span></p>
+            <label for="quantity">Quantity:</label>
+            <select name="quantity" class="select-dropdown">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select></span><div>
+            <h2 class="title">Product Description</h2>
+            <div class="subtitle-container">
+                <span>Display: 3 inches</span>
+                <span>|</span>
+                <span>Color: Black</span>
+            </div> <p>
+                The EOS M50 is a compact interchangeable lens camera for
+                aspiring photographers looking for an easy way to boost 
+                the quality of their photos and videos. With high-resolution
+                4K UHD 24p video, you can capture incredible details and 
+                cinematic moments. </p>
+        </div>
+        <div><button class="btn">Add To Cart</button></div>
+    </div>
+    </div>
+
+
+    
+    <script>
+        
+        $('.product-image-list li').hover(function(){
+            var url = $(this).children('img').attr('src');
+            $('.item-selected').removeClass('item-selected');
+            $(this).addClass('item-selected');
+            $('#featured').attr('src', url);
+        });
+
+    </script>
+
+</body>
+</html>
