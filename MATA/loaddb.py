@@ -24,7 +24,9 @@ for item in data:
 
 	#update doc frequency for item's title
 	freq_table = {}
-	for word in nltk_process(title):
+	tokenized_title = nltk_process(title)
+	title_wordcount = len(tokenized_title)
+	for word in tokenized_title:
 		if word not in freq_table:
 			freq_table[word] = {
 			"des_freq":0,
@@ -33,8 +35,10 @@ for item in data:
 			}
 		freq_table[word]["title_freq"] += 1
 
+	tokenized_description = nltk_process(description)
+	desc_wordcount = len(tokenized_description)
 	#update doc frequency for item's description
-	for word in nltk_process(description):
+	for word in tokenized_description:
 		if word not in freq_table:
 			freq_table[word] = {
 			"des_freq":0,
@@ -42,22 +46,21 @@ for item in data:
 			"review_freq":0,
 			}
 		freq_table[word]["des_freq"] += 1
-	
-	#save all item info, except for review
-	item_obj = Item.objects.create(title=title, description=description, asin=asin, image=img)
-	item_obj.save()
 
+	total_review_wordcount = 0
 	#loop thorugh all the reviews for this item
 	for review in item["reviewText"]:
-		#if no views are found, print "found empty review"
+		#if no reviews are found, print "found empty review"
 		if review == None:
 			print("found empty review")
 			continue
 		#else, create review objects
 		review_obj = Review.objects.create(content=review, item=item_obj)
 
+		tokenized_review = nltk_process(review)
+		total_review_wordcount += len(tokenized_review)
 		#update doc frequency for item reviews
-		for word in nltk_process(review):
+		for word in tokenized_review:
 			if word not in freq_table:
 				freq_table[word] = {
 				"des_freq":0,
@@ -68,6 +71,11 @@ for item in data:
 
 		#save review objects
 		review_obj.save()
+
+	# save all item info, except for review
+	item_obj = Item.objects.create(title=title, description=description, asin=asin, image=img,
+								   title_length=title_wordcount, desc_length=desc_wordcount, review_length=total_review_wordcount)
+	item_obj.save()
 
 	#loop through each item and its corresponding doc freq in the freq table
 	for word, freq_map in freq_table.items():
