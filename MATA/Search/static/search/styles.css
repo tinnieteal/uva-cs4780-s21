@@ -75,12 +75,19 @@ body {
     margin: 0 auto;
     background-color: #fff;
     width: 60%;
-    margin-top: 100px;
+    margin-top: 0px;
+    border-radius: 5px;
+}
+.description-container{
+    margin: 0 auto;
+    background-color: #fff;
+    width: 60%;
+    margin-top: 0px;
     border-radius: 5px;
 }
 .product-image-container{
     padding-top: 80px;
-    margin: 0 2em; }
+    margin: 0; }
 .product-image-list{
     display: flex;
     justify-content: space-between;
@@ -98,11 +105,15 @@ body {
     transition: all ease 0.25s;
 }
 .product-image-item{
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 256px;
+    max-height: 256px;
 }
 .right-container{
-    margin: 1em; }
+    margin: 0em; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .title{
     margin: 0.5em 0 0 0; }
 .subtitle{

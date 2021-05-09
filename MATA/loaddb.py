@@ -9,6 +9,9 @@ from Search.models import *
 from Search.utils import *
 
 
+def process(img_url):
+	return img_url.replace("._SS40_.jpg", ".jpg")
+
 #load dataset
 with open('all_beauty.json', 'r') as f:
 		data = json.load(f)
@@ -24,8 +27,9 @@ for item in data:
 	asin = item["asin"]
 	description = item["description"]
 	title = item["title"] 
-	img = item["image"][0]
-
+	img =  process(item["image"][0])
+	if img == None:
+		print( item["image"][0] )
 
 	#update doc frequency for item's title
 	freq_table = {}
