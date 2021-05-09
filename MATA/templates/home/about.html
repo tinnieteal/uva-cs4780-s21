@@ -1,73 +1,11 @@
-<html lang="en">
+{% extends "search/base.html" %}
+ 
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
 {% load static %}
-<head>
-  <title>MATA</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design for Bootstrap -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <style>
-          @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
-        *{
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          list-style: none;
-          font-family: 'Josefin Sans', sans-serif;
-        }
-        body {
-          font-family: Arial, Helvetica, sans-serif;
-        }
-
-        /* Float four columns side by side */
-        .column {
-          float: left;
-          width: 25%;
-          padding: 0 10px;
-        }
-
-        /* Remove extra left and right margins, due to padding in columns */
-        .row {margin: 0 -5px;}
-
-        /* Clear floats after the columns */
-        .row:after {
-          content: "";
-          display: table;
-          clear: both;
-        }
-
-        /* Style the counter cards */
-        .card {
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-          padding: 16px;
-          text-align: center;
-          background-color: #f1f1f1;
-        }
-
-        /* Responsive columns - one column layout (vertical) on small screens */
-        @media screen and (max-width: 600px) {
-          .column {
-            width: 100%;
-            display: block;
-            margin-bottom: 20px;
-          }
-        }
-        .avatar img {
-            border-radius: 50%;
-            width: 160px;
-            height: 160px;
-            margin-top: 5%;
-            object-fit: cover;
-            object-position: 0 0px;
-        }
-</style>
-</head>
-<body>
 
 <br>
 <div class="jumbotron heavy-rain-gradient">
@@ -76,26 +14,27 @@
         <h1 class="display-4">Matadata-based Search Engine Project</h1>
             <div class="card">
                 <div class="card-body">
-E-commerce platforms are growing at an unprecedented speed all
-over the globe, so are the varieties of products. In order to make
-rational decisions and buy good quality products, shoppers tend
-to spend hours searching for ideal items, reading descriptions, and
-especially reading other shoppers’ reviews, which implies that the
-ranking algorithms sometimes cannot provided them with satisfied
-results. Even worse, when shoppers do not have a clear idea on
-what they need, their descriptive query might not guarantee them
-with ideal products. As a result, aiming to improve user shopping
-experience, we decide to build a search engine, Mega, that would
-search for products based on their titles, ratings, descriptions, and
-especially shoppers’ reviews. Different weights will be given to
-these aspects, and a relevancy score based on bag-of-words matching
-will be used to determine the final ranking. Besides, relevant
-reviews will also be displayed beside the products to make the
-ranking more reasonable. If time allows, we would also implement
-sentence-level sentiment analysis and topic model to improve the
-evaluation of relevancy score.
-            </div>
-    <a href="#"><button class="btn peach-gradient" type="submit">Back to home</button></a>
+                E-commerce platforms are growing at an unprecedented speed all
+                over the globe, so are the varieties of products. In order to make
+                rational decisions and buy good quality products, shoppers tend
+                to spend hours searching for ideal items, reading descriptions, and
+                especially reading other shoppers’ reviews, which implies that the
+                ranking algorithms sometimes cannot provided them with satisfied
+                results. Even worse, when shoppers do not have a clear idea on
+                what they need, their descriptive query might not guarantee them
+                with ideal products. As a result, aiming to improve user shopping
+                experience, we decide to build a search engine, Mega, that would
+                search for products based on their titles, ratings, descriptions, and
+                especially shoppers’ reviews. Different weights will be given to
+                these aspects, and a relevancy score based on bag-of-words matching
+                will be used to determine the final ranking. Besides, relevant
+                reviews will also be displayed beside the products to make the
+                ranking more reasonable. If time allows, we would also implement
+                sentence-level sentiment analysis and topic model to improve the
+                evaluation of relevancy score.
+                </div>
+
+                <a href="/"><button class="btn peach-gradient" type="submit">Back to home</button></a>
                 </h1>
 
                 <hr class="my-4">
@@ -149,5 +88,7 @@ evaluation of relevancy score.
                   </div>
                 </div>
                 </div>
+
   </div>
 </div>
+{% endblock %}
