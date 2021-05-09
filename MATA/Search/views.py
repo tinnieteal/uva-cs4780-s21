@@ -38,6 +38,7 @@ def result(request):
 
     return render(request, 'search/result.html',{'query': query, 'results': results})
 
+
     # # loop through the tokenized & normalized token of the query
     # for token in nltk_process(query):
     #     indices = Index.objects.filter(word=token).all()
