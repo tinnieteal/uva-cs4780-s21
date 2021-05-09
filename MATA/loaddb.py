@@ -21,8 +21,8 @@ item_length = 0
 
 #loop through all items in dataset, assign fields correspondingly
 for item in data:
-	asin = item["asin"] 
-	description = item["description"][0] if len(item["description"]) != 0 else ""
+	asin = item["asin"]
+	description = item["description"]
 	title = item["title"] 
 	img = item["image"][0]
 
