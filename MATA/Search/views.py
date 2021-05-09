@@ -31,6 +31,7 @@ def result(request):
             asin_set.add(item_obj.asin)
 
             reviews = Review.objects.filter(item=mem.item)
+            
             ranking_score = bm25(query, item_obj)
             results.append((ranking_score, item_obj, reviews))
 
