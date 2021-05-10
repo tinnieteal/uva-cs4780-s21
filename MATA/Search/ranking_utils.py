@@ -3,6 +3,9 @@ from .utils import *
 from .models import *
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+import nltk
+nltk.download('vader_lexicon')
+
 num_items = 1000  # Total number of items
 average_item_length = 143.77
 k1 = 1.5  ## [1.2, 2.0]
@@ -73,7 +76,7 @@ def senti_BM(query, item_obj):
             if len(mems) != 0:
                 mem = mems.first()
                 sia = SentimentIntensityAnalyzer()
-                reviews = Review.object.filter(item=item_obj)
+                reviews = Review.object.filter(item=mem)
                 if len(reviews) != 0:
                     rel_reviews = []  # A list of the content of relevant reviews
                     for r in reviews:
