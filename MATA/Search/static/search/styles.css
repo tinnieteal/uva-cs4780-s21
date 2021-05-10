@@ -109,7 +109,7 @@ body {
     max-height: 256px;
 }
 .right-container{
-    margin: 0em; 
+    margin: 0em;
     display: flex;
     flex-direction: column;
     justify-content: center;
