@@ -11,6 +11,7 @@ class Item(models.Model):
     title_length = models.IntegerField(default=0)
     desc_length = models.IntegerField(default=0)
     review_length = models.IntegerField(default=0)
+    rank = models.IntegerField(default=0)
  
     def __str__(self):
         return self.asin
@@ -20,6 +21,7 @@ class Review(models.Model):
     content = models.TextField()
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     length = models.IntegerField(default=0)
+    rating = models.IntegerField(default=0)
     
     def __str__(self):
         return "review of " + self.item.asin + ": " + self.content[0]

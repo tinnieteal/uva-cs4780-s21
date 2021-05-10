@@ -27,6 +27,7 @@ for item in data:
 	asin = item["asin"]
 	description = item["description"]
 	title = item["title"] 
+	rank = item['rank']
 	img =  process(item["image"][0])
 	if img == None:
 		print( item["image"][0] )
@@ -66,7 +67,7 @@ for item in data:
 		if review == None:
 			print("found empty review")
 			continue
-		#else, update review wordcount
+		#update review wordcount
 		tokenized_review = nltk_process(review)
 		review_wordcount = len(tokenized_review)
 
@@ -92,8 +93,8 @@ for item in data:
 	num_item += 1
 	item_length += (title_wordcount +  desc_wordcount + total_review_wordcount)
 
-	for review, review_wordcount in zip(item["reviewText"], review_wordcounts):
-		review_obj = Review.objects.create(content=review, item=item_obj,length=review_wordcount)
+	for review, review_wordcount,review_rating in zip(item["reviewText"], review_wordcounts, item["overall"] ):
+		review_obj = Review.objects.create(content=review, item=item_obj,length=review_wordcount, rating=review_rating)
 		#save review objects
 		review_obj.save()
 
