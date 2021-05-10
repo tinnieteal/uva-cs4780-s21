@@ -10,9 +10,7 @@ from .ranking_utils import *
 import math
 
 def index(request):
-
     return render(request, 'search/index.html',)
-
 
 def result(request):
     query = request.POST.get('query')
@@ -39,6 +37,15 @@ def result(request):
 
     return render(request, 'search/result.html',{'query': query, 'results': results})
 
+
+def detail(request, asin):
+    # asin = request.POST.get('asin')
+    items = Item.objects.filter(asin = asin).all()
+    if len(items) != 0:
+        reviews = Review.objects.filter(item=items.first())
+        return render(request, 'search/detail.html',{'item': items.first(), 'reviews': reviews})
+
+    return None
 
     # # loop through the tokenized & normalized token of the query
     # for token in nltk_process(query):
