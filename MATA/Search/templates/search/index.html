@@ -16,8 +16,11 @@ Search
                     <div class="mb-3">
                         <form method=POST action="{% url 'result' %}" class="form-inline mr-auto">
                             {% csrf_token %}
-                        <input class="form-control form-control-lg" type="text" placeholder="Search" aria-label="Search" name="query" id="query" size="49">
-                          <button class="btn btn-outline-success my-2 my-sm-0" id="button-success" type="submit" >Search</button>
+                            <input class="form-control form-control-lg" type="text" placeholder="Search" aria-label="Search" name="query" id="query" size="49">
+                            <input  class="btn btn-outline-success my-2 my-sm-0" type="submit" name ="none" value="none" >
+                            <input  class="btn btn-outline-success my-2 my-sm-0" type="submit" name ="BM25" value="BM25" >
+                            <input  class="btn btn-outline-success my-2 my-sm-0" type="submit" name ="BM25_ALL" value="BM25_ALL" >
+                            <input  class="btn btn-outline-success my-2 my-sm-0" type="submit" name ="senti_BM25" value="senti_BM25" >
                         </form>
                     </div>
                 </div>
