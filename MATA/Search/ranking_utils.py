@@ -4,9 +4,33 @@ from .models import *
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 num_items = 1000  # Total number of items
-average_item_length = 110.297
+average_item_length = 143.77
 k1 = 1.5  ## [1.2, 2.0]
 b = 0.75 
+
+def idf(num_doc):
+    return math.log( (num_items - num_doc + 0.5) / (num_doc + 0.5) + 1 )
+
+def bm25_without_comment(query, item_obj): 
+    score = 0
+    item_length = item_obj.desc_length + item_obj.title_length
+
+    for token in nltk_process(query):
+        indices = Index.objects.filter(word=token).all()
+        num_doc = 0
+        total_freq = 0
+
+        if len(indices) != 0: 
+            num_doc = indices.first().items.count()  # Number of items that contain this token
+
+            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
+            if len(mems) != 0: 
+                mem = mems.first()
+                total_freq = mem.des_df + mem.title_df
+
+        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
+    return score
+
 
 def bm25(query, item_obj): 
     score = 0
@@ -28,9 +52,6 @@ def bm25(query, item_obj):
         score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
 
     return score
-
-def idf(num_doc):
-    return math.log( (num_items - num_doc + 0.5) / (num_doc + 0.5) + 1 )
 
 def senti_BM(query, item_obj):
     score = 0
