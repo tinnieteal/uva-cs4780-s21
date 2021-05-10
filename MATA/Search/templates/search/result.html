@@ -1,6 +1,7 @@
 {% extends "search/base.html" %}
 
 {% load static %}
+{% load my_tags %}
  
 {% block title %}
 Results
@@ -8,75 +9,186 @@ Results
 
 {% block content %}
 
-<div id="page-container">
-    <div id="content-wrap">
-        <div class="container text-dark mt-5">
-            <div class="row justify-content-md-center">
-                <div class="col-md-12 bg-grey p-3">
-                    <div class="jumbotron border shadow">
-                        <div class="col-md-8 offset-2">
-                            <h1>Result of searching: {{query}}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            
-            {% if results %}
-            <ul>
-                {% for ranking_score, item, reviews in results %}
-                <div class="content-container">
-                    <div class="left-container">
-                        <div class="product-image-container">
-                            <li class="item-selected">
-                                <img src="{{ item.image}}" class="product-image-item"
-                                     alt="Canon Image">
-                            </li>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    img {
+      object-fit:cover;
+      object-position: top;
+      width: 100%;
+      height: 100%;
+    }
+
+    .wrapper {
+      width: 100%;
+      margin: 20px auto;
+    }
+
+    .cards_wrap {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .cards_wrap .card_item {
+      width: 25%;
+      padding: 10px;
+    }
+
+    .cards_wrap .card_inner {
+      background: #fff;
+    }
+
+    .cards_wrap .card_top {
+      width: 100%;
+      height: 600px;
+      padding: 10px;
+      padding-bottom: 0;
+    }
+
+    .cards_wrap .card_bottom {
+      padding: 15px;
+    }
+
+    .cards_wrap .card_bottom .card_category {
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .cards_wrap .card_bottom .card_info {
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px dashed #0071bc;
+    }
+
+    .cards_wrap .card_bottom .card_info .title {
+      color: #0071bc;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .cards_wrap .card_bottom .card_creator {
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .cards_wrap .card_item {
+        width: 33.3%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cards_wrap .card_item {
+        width: 50%;
+      }
+    }
+
+    @media (max-width: 528px) {
+      .cards_wrap .card_item {
+        width: 100%;
+      }
+    }
+
+</style>
+
+<body>
+        <div id="page-container">
+                <div class="container text-dark mt-5">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-12 bg-grey p-3">
+                            <div class="jumbotron border shadow">
+                                <div class="col-md-8 offset-2">
+                                    <div class="mb-3">
+                                        <form method=POST action="{% url 'result' %}" class="form-inline mr-auto">
+                                            {% csrf_token %}
+                                            <div>
+                                                <input  class="form-control form-control-lg" type="text" placeholder="Search" aria-label="Search" name="query" id="query" size="72">
+                                            </div>
+                                            <div class="float-right">
+                                                <input  class="btn aqua-gradient" type="submit" name ="none" value="none" >
+                                                <input  class="btn young-passion-gradient" type="submit" name ="BM25" value="BM25" >
+                                                <input  class="btn peach-gradient" type="submit" name ="BM25_ALL" value="BM25_ALL" >
+                                                <input  class="btn dusty-grass-gradient" type="submit" name ="senti_BM25" value="senti_BM25" >
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <h5>Result of searching: {{query}}</h5>
+                                    <h5>Ranking method: {{choice}}</h5>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
-                    <div class="right-container">
-                        <div>
-                            <h2 class="title">{{ item.title}}</h1>
-                            <h5>{{ ranking_score}}</h5>
-                            <h2 class="subtitle subtitle-container">
-                                <a target="_blank" href="https://www.amazon.com/dp/{{ item.asin}}">{{ item.asin}}</a>
-                            </h2>
-<!--                                 <a href="#" class="reviews">
-                                    986 customer reviews
-                                </a> -->
-                        </div>
-                    </div>
                 </div>
-                <div class="description-container">
-                    <h2 class="title">Product Description</h2>
-                    <div>
-                        {{item.description}}
-                    </div>
-                    <h2 class="title">Product Reviews</h2>
-                    <div>
-                        {% for review in reviews %}
-                        <div > {{ review.content }} </div>
+                    {% if results %}
+                    <div class="wrapper">
+                        <div class="cards_wrap">
+                        {% for ranking_score, item, reviews in results %}
+                            <div class="card_item">
+                                <div class="card_inner">
+
+                                    <div class="card_top" >
+                                        <img src="{{ item.image}}" alt="" height="200" width="200"/>
+                                    </div>
+
+                                    <div class="card_bottom">
+
+                                        <div class="card_info">
+                                             <a target="_blank" href="/search/detail/{{item.asin}}">
+                                            <p class="title">{{ item.title|highlight_search:query}}</p></a>
+                                        </div>
+
+                                        <div class="card_creator">
+                                            <p>Ranking score: {{ ranking_score}} </p>
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
                         {% endfor%}
-<!--                                 <a href="#" class="reviews">
-                            986 customer reviews
-                        </a> -->
+                        </div>
                     </div>
-                </div>
 
-        </ul>
-        {% endfor%}
-        {% endif %} 
+
+        <!--                <div class="content-container">-->
+        <!--                    <div class="left-container">-->
+        <!--                        <div class="product-image-container">-->
+        <!--                            <li class="item-selected">-->
+        <!--                                <img src="" class="product-image-item"-->
+        <!--                                     alt="Canon Image">-->
+        <!--                            </li>-->
+
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="right-container">-->
+        <!--                        <div>-->
+        <!--                            <h2 class="title"></h1>-->
+        <!--                            -->
+        <!--                            <h2 class="subtitle subtitle-container">-->
+        <!--                                -->
+        <!--                            </h2>-->
+
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="description-container">-->
+        <!--                    <h2 class="title">Product Description</h2>-->
+        <!--                    <div>-->
+        <!--                        {{item.description}}-->
+        <!--                    </div>-->
+        <!--                    <h2 class="title">Product Reviews</h2>-->
+        <!--                    <div>-->
+        <!--                        {% for review in reviews %}-->
+        <!--                        <div > {{ review.content }} </div>-->
+        <!--                        {% endfor%}-->
+        <!--                    </div>-->
+        <!--                </div>-->
+
+        <!--        </ul>-->
+
+                {% endif %}
         </div>
-
-    </div>
-</div>
-
+</body>>
 {% endblock %}
-
-
-
-
-
-

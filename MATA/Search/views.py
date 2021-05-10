@@ -16,30 +16,93 @@ def index(request):
 
 def result(request):
     query = request.POST.get('query')
+    if request.POST:
+        if 'none' in request.POST:
+            choice = request.POST.get('none')
+        elif 'BM25' in request.POST:
+            choice = request.POST.get('BM25')
+        elif 'BM25_ALL' in request.POST:
+            choice = request.POST.get('BM25_ALL')
+        elif 'senti_BM25' in request.POST:
+            choice = request.POST.get('senti_BM25')
+        else:
+            choice = "none"
+
     results = []
-    #reviews = []
-    #loop through the tokenized & normalized token of the query
+    # reviews = []
+    # loop through the tokenized & normalized token of the query
     asin_set = set()
-    for token in nltk_process(query):
-        indices = Index.objects.filter(word=token).all()
-        if len(indices) == 0:
-            continue
-        for mem in Membership.objects.filter(index=indices.first()).all():
-            item_obj = mem.item
-            if item_obj.asin in asin_set:
+
+    if choice == "BM25":
+        for token in nltk_process(query):
+            indices = Index.objects.filter(word=token).all()
+            if len(indices) == 0:
                 continue
-            asin_set.add(item_obj.asin)
+            for mem in Membership.objects.filter(index=indices.first()).all():
+                item_obj = mem.item
+                if item_obj.asin in asin_set:
+                    continue
+                asin_set.add(item_obj.asin)
 
-            reviews = Review.objects.filter(item=mem.item)
-            
-            ranking_score = bm25(query, item_obj)
-            results.append((ranking_score, item_obj, reviews))
+                reviews = Review.objects.filter(item=mem.item)
 
-    results.sort(key=lambda element: element[0], reverse=True) 
+                ranking_score = bm25_without_comment(query, item_obj)
+                results.append((ranking_score, item_obj, reviews))
+        results.sort(key=lambda element: element[0], reverse=True)
 
-    return render(request, 'search/result.html',{'query': query, 'results': results})
+    elif choice == "BM25_ALL":
+        for token in nltk_process(query):
+            indices = Index.objects.filter(word=token).all()
+            if len(indices) == 0:
+                continue
+            for mem in Membership.objects.filter(index=indices.first()).all():
+                item_obj = mem.item
+                if item_obj.asin in asin_set:
+                    continue
+                asin_set.add(item_obj.asin)
 
+                reviews = Review.objects.filter(item=mem.item)
 
+                ranking_score = bm25(query, item_obj)
+                results.append((ranking_score, item_obj, reviews))
+        results.sort(key=lambda element: element[0], reverse=True)
+
+    elif choice == "senti_BM25":
+        for token in nltk_process(query):
+            indices = Index.objects.filter(word=token).all()
+            if len(indices) == 0:
+                continue
+            for mem in Membership.objects.filter(index=indices.first()).all():
+                item_obj = mem.item
+                if item_obj.asin in asin_set:
+                    continue
+                asin_set.add(item_obj.asin)
+
+                reviews = Review.objects.filter(item=mem.item)
+
+                ranking_score = senti_BM(query, item_obj)
+                results.append((ranking_score, item_obj, reviews))
+        results.sort(key=lambda element: element[0], reverse=True)
+
+    elif choice == "none":
+        ranking_score = "no ranking"
+        for token in nltk_process(query):
+            indices = Index.objects.filter(word=token).all()
+            if len(indices) == 0:
+                continue
+            for mem in Membership.objects.filter(index=indices.first()).all():
+                results.append((ranking_score, mem.item, Review.objects.filter(item=mem.item)))
+
+    return render(request, 'search/result.html',{'query': query, 'results': results, 'choice':choice})
+
+def detail(request, asin):
+    # asin = request.POST.get('asin')
+    items = Item.objects.filter(asin = asin).all()
+    if len(items) != 0:
+        reviews = Review.objects.filter(item=items.first())
+        return render(request, 'search/detail.html',{'item': items.first(), 'reviews': reviews})
+
+    return None
     # # loop through the tokenized & normalized token of the query
     # for token in nltk_process(query):
     #     indices = Index.objects.filter(word=token).all()

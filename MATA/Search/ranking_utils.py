@@ -1,4 +1,6 @@
 import math
+import nltk
+nltk.downloader.download('vader_lexicon')
 from .utils import *
 from .models import *
 from nltk.sentiment import SentimentIntensityAnalyzer
