@@ -12,7 +12,7 @@ def highlight_search(text, search):
     rgx = compile(rescape(search), IGNORECASE)
     return mark_safe(
         rgx.sub(
-            lambda m: '<b class="text text-danger">{}</b>'.format(m.group()),
+            lambda m: '<mark>{}</mark>'.format(m.group()),
             text
         )
     )

@@ -1,5 +1,5 @@
 <html lang="en">
-
+    {% load my_tags %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -22,14 +22,19 @@
 
     <title>{% block title %}{% endblock %}</title>
     {% block head %}
+
     {% endblock %}
       <style>
+              @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+              @import url('https://fonts.googleapis.com/css?family=Calibri:400,400i,500,500i,700,700i');
 
             *{
               margin: 0;
-              padding: 0;
+              padding: 10px;
               box-sizing: border-box;
               list-style: none;
+              font-family: 'calibri', sans-serif;
             }
 
             body{
@@ -48,7 +53,7 @@
 
             .wrapper .left{
               width: 50%;
-              background: linear-gradient(to right,#FF5849,#FFF775);
+              background: #FFFFFF;
               padding: 30px 25px;
               border-top-left-radius: 5px;
               border-bottom-left-radius: 5px;
@@ -63,6 +68,7 @@
 
             .wrapper .left h4{
               margin-bottom: 10px;
+              color: #000000;
             }
 
             .wrapper .left p{
@@ -160,17 +166,6 @@
               <li class="nav-item {% if searchurl == request.path %}active{% endif %}">
                 <a class="nav-link" href="{% url 'search' %}">Search<!-- <span class="sr-only">(current)</span> --></a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  More info
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
               </ul>
           </div>
     </header>
@@ -181,31 +176,28 @@
 
 
 
-<body>>
+<body>
     <div class="wrapper">
         <div class="left">
-            <img src="{{ item.image }}" class="product-image-item">
-            <h4>{{ item.title}}</h4>
+            <img src="{{ item.image }}" class="product-image-item ">
+            <h4>{{item.title|highlight_search:query}}</h4>
               <a target="_blank" href="https://www.amazon.com/dp/{{ item.asin}}">{{ item.asin}}</a>
         </div>
         <div class="right">
-            <div class="info">
+            <div class="projects">
                 <h3>Product Description</h3>
-                <div class="info_data">
-                        {{item.description}}
-
+                <div class="projects_data">
+                <div >{{item.description|highlight_search:query}}</div>
                 </div>
             </div>
 
-          <div class="projects">
+            <div class="projects">
                 <h3>Product Reviews</h3>
-
                 {% for review in reviews %}
                 <div class="projects_data">
-                <div > {{ review.content }} </div>
+                <div > {{ review.content|highlight_search:query}}</div>
                 </div><hr>
                 {% endfor%}
-
             </div>
                 <a href="/search"><button class="btn aqua-gradient float-right"  > back to search page</button></a>
         </div>

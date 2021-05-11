@@ -96,11 +96,11 @@ def result(request):
     return render(request, 'search/result.html',{'query': query, 'results': results, 'choice':choice})
 
 def detail(request, asin):
-    # asin = request.POST.get('asin')
+    query = request.POST.get('query')
     items = Item.objects.filter(asin = asin).all()
     if len(items) != 0:
         reviews = Review.objects.filter(item=items.first())
-        return render(request, 'search/detail.html',{'item': items.first(), 'reviews': reviews})
+        return render(request, 'search/detail.html',{'item': items.first(), 'reviews': reviews, 'query':query})
 
     return None
     # # loop through the tokenized & normalized token of the query
