@@ -9,7 +9,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('content', 'length', 'rating')
 
 class IndexAdmin(admin.ModelAdmin):
-    list_display = ('word', 'des_tf', 'title_tf', 'review_tf', 'get_items')
+    list_display = ('word', 'des_tf', 'title_tf', 'review_tf', 'get_items', 'num_title', 'num_des','num_review')
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('index', 'item', 'des_df', 'title_df', 'review_df')

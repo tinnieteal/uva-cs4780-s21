@@ -19,10 +19,10 @@ def result(request):
     if request.POST:
         if 'none' in request.POST:
             choice = request.POST.get('none')
-        elif 'BM25' in request.POST:
-            choice = request.POST.get('BM25')
-        elif 'BM25_ALL' in request.POST:
-            choice = request.POST.get('BM25_ALL')
+        elif 'bm25_title' in request.POST:
+            choice = request.POST.get('bm25_title')
+        elif 'bm25_combine_later' in request.POST:
+            choice = request.POST.get('bm25_combine_later')
         elif 'senti_BM25' in request.POST:
             choice = request.POST.get('senti_BM25')
         else:
@@ -33,7 +33,7 @@ def result(request):
     # loop through the tokenized & normalized token of the query
     asin_set = set()
 
-    if choice == "BM25":
+    if choice == "bm25_title":
         for token in nltk_process(query):
             indices = Index.objects.filter(word=token).all()
             if len(indices) == 0:
@@ -46,11 +46,11 @@ def result(request):
 
                 reviews = Review.objects.filter(item=mem.item)
 
-                ranking_score = bm25_without_comment(query, item_obj)
+                ranking_score = bm25_title(query, item_obj)
                 results.append((ranking_score, item_obj, reviews))
         results.sort(key=lambda element: element[0], reverse=True)
 
-    elif choice == "BM25_ALL":
+    elif choice == "bm25_combine_later":
         for token in nltk_process(query):
             indices = Index.objects.filter(word=token).all()
             if len(indices) == 0:
@@ -63,7 +63,7 @@ def result(request):
 
                 reviews = Review.objects.filter(item=mem.item)
 
-                ranking_score = bm25(query, item_obj)
+                ranking_score = bm25_combine_later(query, item_obj)
                 results.append((ranking_score, item_obj, reviews))
         results.sort(key=lambda element: element[0], reverse=True)
 

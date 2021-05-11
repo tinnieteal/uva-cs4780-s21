@@ -100,35 +100,24 @@ Results
 
 <body>
         <div id="page-container">
-                <div class="container text-dark mt-5">
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-12 bg-grey p-3">
-                            <div class="jumbotron border shadow">
-                                <div class="col-md-8 offset-2">
-                                    <div class="mb-3">
-                                        <form method=POST action="{% url 'result' %}" class="form-inline mr-auto">
-                                            {% csrf_token %}
-                                            <div>
-                                                <input  class="form-control form-control-lg" type="text" placeholder="Search" aria-label="Search" name="query" id="query" size="72">
-                                            </div>
-                                            <div class="float-right">
-                                                <input  class="btn aqua-gradient" type="submit" name ="none" value="none" >
-                                                <input  class="btn young-passion-gradient" type="submit" name ="BM25" value="BM25" >
-                                                <input  class="btn peach-gradient" type="submit" name ="BM25_ALL" value="BM25_ALL" >
-                                                <input  class="btn dusty-grass-gradient" type="submit" name ="senti_BM25" value="senti_BM25" >
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <h5>Result of searching: {{query}}</h5>
-                                    <h5>Ranking method: {{choice}}</h5>
-                                </div>
-                            </div>
 
-                        </div>
+         <div>
+            <form method=POST action="{% url 'result' %}" class="form-inline mr-auto" style="display: flex; flex-direction: column; ">
+                    {% csrf_token %}
+                    <input  class="form-control form-control-lg" type="text" placeholder="Search" aria-label="Search" name="query" id="query" style="max-width: 600px; width:100%">
+                    <div class="float-right" style="display: flex; flex-direction: row; justify-content: center;">
+                        <input  class="btn aqua-gradient" type="submit" name ="none" value="none" >
+                        <input  class="btn young-passion-gradient" type="submit" name ="BM25" value="BM25" >
+                        <input  class="btn peach-gradient" type="submit" name ="BM25_ALL" value="BM25_ALL" >
+                        <input  class="btn dusty-grass-gradient" type="submit" name ="senti_BM25" value="senti_BM25" >
                     </div>
-                </div>
-                    {% if results %}
-                    <div class="wrapper">
+                </form>
+            </div>
+              <center> Result of searching: {{query}}, {{choice}}</center>
+          </div>
+                   
+          {% if results %}
+                    <div class="wrapper" id="results">
                         <div class="cards_wrap">
                         {% for ranking_score, item, reviews in results %}
                             <div class="card_item">
@@ -139,7 +128,7 @@ Results
                                     </div>
 
                                     <div class="card_bottom ">
-                                        <form method=POST action="/search/detail/{{item.asin}}" >
+                                        <form method=POST action="/search/detail/{{item.asin}}#content" >
                                             {% csrf_token %}
 
                                             <button class="card_info cloudy-knoxville-gradient shadow-lg" type="submit">
