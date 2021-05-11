@@ -20,7 +20,10 @@ with open('all_beauty.json', 'r') as f:
 index = {}
 
 num_item = 0 
-item_length = 0
+item_length_all = 0
+item_length_desc = 0 
+item_length_review = 0 
+item_length_title = 0 
 
 #loop through all items in dataset, assign fields correspondingly
 for item in data:
@@ -91,7 +94,11 @@ for item in data:
 	item_obj.save()
 
 	num_item += 1
-	item_length += (title_wordcount +  desc_wordcount + total_review_wordcount)
+	item_length_desc += desc_wordcount
+	item_length_review += total_review_wordcount
+	item_length_title += title_wordcount
+	item_length_all += (title_wordcount +  desc_wordcount + total_review_wordcount)
+
 
 	for review, review_wordcount,review_rating in zip(item["reviewText"], review_wordcounts, item["overall"] ):
 		review_obj = Review.objects.create(content=review, item=item_obj,length=review_wordcount, rating=review_rating)
@@ -142,8 +149,16 @@ for index_obj in Index.objects.all():
 
 
 print( "num_item: {} ".format(  num_item ) )
-print( "item length total: {} ".format(  item_length ) )
-print( "item length averge: {} ".format(  item_length / num_item ) )
+"----dividing line-----"
+print( "totol description length: {} ".format(  item_length_desc ) )
+print( "totol title length: {} ".format(  item_length_title ) )
+print( "totol review length: {} ".format(  item_length_review ) )
+print( "total item document length: {} ".format(  item_length_all ) )
+"----dividing line-----"
+print( "average description length: {} ".format(  item_length_desc / num_item ) )
+print( "average title length: {} ".format(  item_length_title / num_item ) )
+print( "average review length: {} ".format(  item_length_review / num_item ) )
+print( "item length averge: {} ".format(  item_length_all / num_item ) )
 
 # print( len(Item.objects.all()) )
 # print( len(Review.objects.all()) )
