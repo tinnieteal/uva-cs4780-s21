@@ -8,11 +8,11 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 nltk.download('vader_lexicon')
 
-num_items = 1000  # Total number of items
-average_desc_length = 63.217
-average_title_length = 12.592
-average_review_length = 12.592
-average_item_length = 143.77
+num_items = 4048  # Total number of items
+average_desc_length = 64.38117588932806
+average_title_length = 12.563735177865613
+average_review_length = 70.05681818181819
+average_item_length = 147.00172924901185
 k1 = 1.5  ## [1.2, 2.0]
 b = 0.75 
 
@@ -38,7 +38,6 @@ def idf(num_doc):
 
 #         score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
 #     return score
-
 
 def bm25_combine_first(query, item_obj): 
     score = 0
@@ -84,7 +83,6 @@ def bm25_combine_later(query, item_obj):
 
         desc_score += idf(num_doc) * ((desc_freq * (k1+1)) / (desc_freq + k1 * (1-b+b * desc_length / average_desc_length)))
 
-
     #calculate bm25 for title
     title_length = item_obj.title_length
 
@@ -102,7 +100,6 @@ def bm25_combine_later(query, item_obj):
                 title_freq = mem.title_df
 
         title_score += idf(num_doc) * ((title_freq * (k1+1)) / (title_freq + k1 * (1-b+b * title_length / average_title_length)))
-
     
     #calculate bm25 for review
     review_length = item_obj.review_length
@@ -121,11 +118,8 @@ def bm25_combine_later(query, item_obj):
 
         review_score += idf(num_doc) * ((review_freq * (k1+1)) / (review_freq + k1 * (1-b+b * review_length / average_review_length)))
 
-    
-    final_score = (desc_score + title_score + review_score)
+    final_score = (desc_score + title_score + 50*review_score)
     return final_score
-
-
 
 
 def senti_BM(query, item_obj):
@@ -150,14 +144,14 @@ def senti_BM(query, item_obj):
                 sia = SentimentIntensityAnalyzer()
                 reviews = Review.objects.filter(item=mem.item).all()
                 if len(reviews) != 0:
-                    rel_reviews = []  # A list of the content of relevant reviews
+                    # rel_reviews = []  # A list of the content of relevant reviews
                     for r in reviews:
-                        tokenized_review = nltk_process(r.content)
+                        # tokenized_review = nltk_process(r.content)
                         # Find relevant reviews
-                        if token in tokenized_review:
-                            rel_reviews.append(r.content)
-                    for content in rel_reviews:
-                        senti_scores = sia.polarity_scores(content)
+                    #     if token in tokenized_review:
+                    #         rel_reviews.append(r.content)
+                    # for content in rel_reviews:
+                        senti_scores = sia.polarity_scores(r.content)
                         """ We use compound scores to decide whether the review is negative
                         Compound score thresholds:
                         positive: compound score>=0.05
@@ -166,10 +160,19 @@ def senti_BM(query, item_obj):
                         """
                         if senti_scores["compound"] <= -0.05:
                             # Reduce the weight for review if the relevant review is negative
-                            review_wt = 0.5
+                            review_wt += -10
                         elif senti_scores["compound"] >= 0.05:
                             # Increase the weight for review if the relevant review is positive
-                            review_wt = 1
+                            review_wt += 100
+
+                total_freq = desc_wt*mem.des_df + title_wt*mem.title_df + review_wt*mem.review_df
+                # if len(reviews) != 0:
+                #     for review in reviews:
+                #         if (review.rating > 3 and review.rating <= 5):
+                #             review_wt = 5
+                #         elif (review.rating <=3):
+                #             review_wt = 2
+                # review_wt = 1
                 total_freq = desc_wt*mem.des_df + title_wt*mem.title_df + review_wt*mem.review_df
 
         score += idf(num_doc) * (
