@@ -60,6 +60,26 @@ def bm25_combine_first(query, item_obj):
 
     return score
 
+def bm25_title(query, item_obj):
+    title_score = 0
+
+    title_length = item_obj.title_length
+    for token in nltk_process(query):
+        indices = Index.objects.filter(word=token).all()
+        num_doc = 0
+        title_freq = 0 
+
+        if len(indices) != 0: 
+            num_title = indices.first().items.count()  # Number of items that contain this token
+
+            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
+            if len(mems) != 0: 
+                mem = mems.first()
+                title_freq = mem.title_df
+
+        title_score += idf(num_title) * ((title_freq * (k1+1)) / (title_freq + k1 * (1-b+b * title_length / average_title_length)))
+    
+
 def bm25_combine_later(query, item_obj): 
     desc_score = 0
     title_score = 0
