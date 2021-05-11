@@ -33,6 +33,9 @@ class Index(models.Model):
     des_tf = models.IntegerField(default=0)
     title_tf = models.IntegerField(default=0)
     review_tf = models.IntegerField(default=0)
+    num_title = models.IntegerField(default=0)
+    num_des = models.IntegerField(default=0)
+    num_review = models.IntegerField(default=0)
 
     def __str__(self):
         return self.word

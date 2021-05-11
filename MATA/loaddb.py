@@ -25,6 +25,10 @@ item_length_desc = 0
 item_length_review = 0 
 item_length_title = 0 
 
+
+#update the number of doc - title, desc, and review that contains this word
+num_doc = {}
+
 #loop through all items in dataset, assign fields correspondingly
 for item in data:
 	asin = item["asin"]
@@ -37,6 +41,8 @@ for item in data:
 
 	#update doc frequency for item's title
 	freq_table = {}
+
+
 	tokenized_title = nltk_process(title)
 	title_wordcount = len(tokenized_title)
 	for word in tokenized_title:
@@ -47,6 +53,15 @@ for item in data:
 			"review_freq":0,
 			}
 		freq_table[word]["title_freq"] += 1
+		
+	for word in set(tokenized_title):
+		if word not in num_doc:
+			num_doc[word] = {
+			"num_des":0,
+			"num_title":0,
+			"num_review":0,
+			}
+		num_doc[word]["num_title"] +=1
 
 	tokenized_description = nltk_process(description)
 	desc_wordcount = len(tokenized_description)
@@ -59,6 +74,15 @@ for item in data:
 			"review_freq":0,
 			}
 		freq_table[word]["des_freq"] += 1
+
+	for word in set(tokenized_description):
+		if word not in num_doc:
+			num_doc[word] = {
+			"num_des":0,
+			"num_title":0,
+			"num_review":0,
+			}
+		num_doc[word]["num_des"] +=1
 
 	total_review_wordcount = 0
 	#loop thorugh all the reviews for this item
@@ -86,7 +110,16 @@ for item in data:
 				"title_freq":0,
 				"review_freq":0,
 				}
-			freq_table[word]["review_freq"] += 1	
+			freq_table[word]["review_freq"] += 1
+
+		for word in set(tokenized_review):
+			if word not in num_doc:
+				num_doc[word] = {
+				"num_des":0,
+				"num_title":0,
+				"num_review":0,
+				}
+			num_doc[word]["num_review"] +=1
 
 	# save all item info, except for review
 	item_obj = Item.objects.create(title=title, description=description, asin=asin, image=img,
@@ -119,7 +152,8 @@ for item in data:
 			index=index[word], 
 			des_df=freq_map["des_freq"], 
 			title_df=freq_map["title_freq"], 
-			review_df=freq_map["review_freq"])
+			review_df=freq_map["review_freq"]
+			)
 
 		mem_obj.save()
 		
@@ -141,20 +175,25 @@ for index_obj in Index.objects.all():
 		index_obj.items.add(mem_obj.item.pk)
 	# print( des_tf, title_tf, review_tf )
 
+	word = index_obj.word
+
 	Index.objects.filter(pk=index_obj.pk).update(
 		des_tf = des_tf,
 		title_tf = title_tf,
-		review_tf = review_tf
+		review_tf = review_tf,
+		num_title=num_doc[word]["num_title"],
+		num_des=num_doc[word]["num_des"],
+		num_review=num_doc[word]["num_review"]
 		)
 
 
 print( "num_item: {} ".format(  num_item ) )
-"----dividing line-----"
+print("----dividing line-----")
 print( "totol description length: {} ".format(  item_length_desc ) )
 print( "totol title length: {} ".format(  item_length_title ) )
 print( "totol review length: {} ".format(  item_length_review ) )
 print( "total item document length: {} ".format(  item_length_all ) )
-"----dividing line-----"
+print("----dividing line-----")
 print( "average description length: {} ".format(  item_length_desc / num_item ) )
 print( "average title length: {} ".format(  item_length_title / num_item ) )
 print( "average review length: {} ".format(  item_length_review / num_item ) )
