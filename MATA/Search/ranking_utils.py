@@ -36,135 +36,71 @@ def bm25_title(query, item_obj):
                 mem = mems.first()
                 total_freq = mem.title_df
 
-        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
+        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_title_length)))
     
 
     return score
 
-# def bm25_description(query, item_obj): 
-#     score = 0
-#     item_length = item_obj.desc_length
+def bm25_des(query, item_obj): 
+    score = 0
+    item_length = item_obj.desc_length
 
-#     for token in nltk_process(query):
-#         indices = Index.objects.filter(word=token).all()
-#         num_doc = 0
-#         total_freq = 0
+    for token in nltk_process(query):
+        indices = Index.objects.filter(word=token).all()
+        num_doc = 0
+        total_freq = 0
 
-#         if len(indices) != 0: 
-#             num_doc = indices.first().num_des  # Number of titles that contain this token
+        if len(indices) != 0: 
+            num_doc = indices.first().num_des  # Number of titles that contain this token
 
-#             mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-#             if len(mems) != 0: 
-#                 mem = mems.first()
-#                 total_freq = mem.title_df
+            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
+            if len(mems) != 0: 
+                mem = mems.first()
+                total_freq = mem.des_df
 
-#         score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
-#     return score
+        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_review_length)))
 
-# def bm25_combine_first(query, item_obj): 
-#     score = 0
-#     item_length = item_obj.desc_length + item_obj.title_length + item_obj.review_length
+    return score
 
-#     for token in nltk_process(query):
-#         indices = Index.objects.filter(word=token).all()
-#         num_doc = 0
-#         total_freq = 0
+def bm25_review (query, item_obj):
+    score = 0
+    item_length = item_obj.review_length
 
-#         if len(indices) != 0: 
-#             num_doc = indices.first().items.count()  # Number of items that contain this token
+    for token in nltk_process(query):
+        indices = Index.objects.filter(word=token).all()
+        num_doc = 0
+        total_freq = 0
 
-#             mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-#             if len(mems) != 0: 
-#                 mem = mems.first()
-#                 total_freq = mem.des_df + mem.title_df + mem.review_df
+        if len(indices) != 0: 
+            num_doc = indices.first().num_review  # Number of titles that contain this token
 
-#         score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
+            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
+            if len(mems) != 0: 
+                mem = mems.first()
+                total_freq = mem.review_df
 
-#     return score
+        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
 
-# def bm25_title(query, item_obj):
-#     title_score = 0
+    return score
 
-#     title_length = item_obj.title_length
-#     for token in nltk_process(query):
-#         indices = Index.objects.filter(word=token).all()
-#         num_doc = 0
-#         title_freq = 0 
-
-#         if len(indices) != 0: 
-#             num_title = indices.first().items.count()  # Number of items that contain this token
-
-#             mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-#             if len(mems) != 0: 
-#                 mem = mems.first()
-#                 title_freq = mem.title_df
-
-#         title_score += idf(num_title) * ((title_freq * (k1+1)) / (title_freq + k1 * (1-b+b * title_length / average_title_length)))
+def BM25_fields (query, item_obj):
+    review_sc = bm25_review (query, item_obj)
+    des_sc = bm25_des(query, item_obj)
+    title_sc = bm25_title(query, item_obj)
+    total_sc = review_sc + des_sc + title_sc
     
+    return total_sc
 
-def bm25_combine_later(query, item_obj): 
-    desc_score = 0
-    title_score = 0
-    review_score = 0
-
-    #calculate bm25 for description
-    desc_length = item_obj.desc_length
-
-    for token in nltk_process(query):
-        indices = Index.objects.filter(word=token).all()
-        num_doc = 0
-        desc_freq = 0 
-
-        if len(indices) != 0: 
-            num_doc = indices.first().items.count()  # Number of items that contain this token
-
-            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-            if len(mems) != 0: 
-                mem = mems.first()
-                desc_freq = mem.des_df
-
-        desc_score += idf(num_doc) * ((desc_freq * (k1+1)) / (desc_freq + k1 * (1-b+b * desc_length / average_desc_length)))
-
-    #calculate bm25 for title
-    title_length = item_obj.title_length
-
-    for token in nltk_process(query):
-        indices = Index.objects.filter(word=token).all()
-        num_doc = 0
-        title_freq = 0 
-
-        if len(indices) != 0: 
-            num_doc = indices.first().items.count()  # Number of items that contain this token
-
-            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-            if len(mems) != 0: 
-                mem = mems.first()
-                title_freq = mem.title_df
-
-        title_score += idf(num_doc) * ((title_freq * (k1+1)) / (title_freq + k1 * (1-b+b * title_length / average_title_length)))
+#without comment
+def BM25_doc(query, item_obj): 
+    # review_sc = bm25_review (query, item_obj)
+    des_sc = bm25_des(query, item_obj)
+    title_sc = bm25_title(query, item_obj)
+    total_sc = des_sc + title_sc
     
-    #calculate bm25 for review
-    review_length = item_obj.review_length
-    for token in nltk_process(query):
-        indices = Index.objects.filter(word=token).all()
-        num_doc = 0
-        review_freq = 0 
+    return total_sc
 
-        if len(indices) != 0: 
-            num_doc = indices.first().items.count()  # Number of items that contain this token
-
-            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-            if len(mems) != 0: 
-                mem = mems.first()
-                review_freq = mem.review_df
-
-        review_score += idf(num_doc) * ((review_freq * (k1+1)) / (review_freq + k1 * (1-b+b * review_length / average_review_length)))
-
-    final_score = (desc_score + title_score + 50*review_score)
-    return final_score
-
-
-def senti_BM(query, item_obj):
+def senti_BM_doc(query, item_obj):
     score = 0
     item_length = item_obj.desc_length + item_obj.title_length + item_obj.review_length
     # Initialize the weights for each feature to 1
