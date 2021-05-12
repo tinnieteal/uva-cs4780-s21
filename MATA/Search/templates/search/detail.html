@@ -26,8 +26,9 @@ Results
             <div class="projects" style="padding: 0px">
                 <h3>Product Reviews</h3>
                 {% for review in reviews %}
+                <h5> Rating: {{ review.rating }} </h5>
                 <div class="projects_data" style="padding: 0px">
-                <div > {{ review.content|highlight_search:query}}</div>
+                <div > {{ review.content | highlight_search:query}}</div>
                 </div>
                 <hr>
                 {% endfor%}
