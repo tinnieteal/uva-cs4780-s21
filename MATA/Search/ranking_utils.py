@@ -91,26 +91,14 @@ def BM25_fields (query, item_obj):
     
     return total_sc
 
+#without comment
 def BM25_doc(query, item_obj): 
-    score = 0
-    item_length = item_obj.desc_length + item_obj.title_length + item_obj.review_length
-
-    for token in nltk_process(query):
-        indices = Index.objects.filter(word=token).all()
-        num_doc = 0
-        total_freq = 0
-
-        if len(indices) != 0: 
-            num_doc = indices.first().items.count()  # Number of items that contain this token
-
-            mems = Membership.objects.filter(index=indices.first(), item=item_obj).all()
-            if len(mems) != 0: 
-                mem = mems.first()
-                total_freq = mem.des_df + mem.title_df + mem.review_df
-
-        score += idf(num_doc) * ((total_freq * (k1+1)) / (total_freq + k1 * (1-b+b * item_length / average_item_length)))
-
-    return score
+    # review_sc = bm25_review (query, item_obj)
+    des_sc = bm25_des(query, item_obj)
+    title_sc = bm25_title(query, item_obj)
+    total_sc = des_sc + title_sc
+    
+    return total_sc
 
 def senti_BM_doc(query, item_obj):
     score = 0
