@@ -5,93 +5,32 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 from .models import *
 from .utils import *
-from .ranking_utils import *
-
-import math
+from .search_utils import *
 
 def index(request):
-
     return render(request, 'search/index.html',)
 
 
 def result(request):
     query = request.POST.get('query')
+
+    print(query, request.POST, request.POST.get('senti_BM25_doc') )
     if request.POST:
         if 'none' in request.POST:
             choice = request.POST.get('none')
-        elif 'bm25_title' in request.POST:
-            choice = request.POST.get('bm25_title')
-        elif 'bm25_combine_later' in request.POST:
-            choice = request.POST.get('bm25_combine_later')
-        elif 'senti_BM25' in request.POST:
-            choice = request.POST.get('senti_BM25')
+            results = search_none(query )
+        elif 'BM25_doc' in request.POST:
+            choice = request.POST.get('BM25_doc')
+            results = search_BM25_doc(query )
+        elif 'BM25_fields' in request.POST:
+            choice = request.POST.get('BM25_fields')
+            results = search_BM25_fields(query )
+        elif 'senti_BM25_doc' in request.POST:
+            choice = request.POST.get('senti_BM25_doc')
+            results = search_senti_BM25_doc(query )
         else:
-            choice = "none"
+            return None
 
-    results = []
-    # reviews = []
-    # loop through the tokenized & normalized token of the query
-    asin_set = set()
-
-    if choice == "bm25_title":
-        for token in nltk_process(query):
-            indices = Index.objects.filter(word=token).all()
-            if len(indices) == 0:
-                continue
-            for mem in Membership.objects.filter(index=indices.first()).all():
-                item_obj = mem.item
-                if item_obj.asin in asin_set:
-                    continue
-                asin_set.add(item_obj.asin)
-
-                reviews = Review.objects.filter(item=mem.item)
-
-                ranking_score = bm25_title(query, item_obj)
-                results.append((ranking_score, item_obj, reviews))
-        results.sort(key=lambda element: element[0], reverse=True)
-
-    elif choice == "bm25_combine_later":
-        for token in nltk_process(query):
-            indices = Index.objects.filter(word=token).all()
-            if len(indices) == 0:
-                continue
-            for mem in Membership.objects.filter(index=indices.first()).all():
-                item_obj = mem.item
-                if item_obj.asin in asin_set:
-                    continue
-                asin_set.add(item_obj.asin)
-
-                reviews = Review.objects.filter(item=mem.item)
-
-                ranking_score = bm25_combine_later(query, item_obj)
-                results.append((ranking_score, item_obj, reviews))
-        results.sort(key=lambda element: element[0], reverse=True)
-
-    elif choice == "senti_BM25":
-        for token in nltk_process(query):
-            indices = Index.objects.filter(word=token).all()
-            if len(indices) == 0:
-                continue
-            for mem in Membership.objects.filter(index=indices.first()).all():
-                item_obj = mem.item
-                if item_obj.asin in asin_set:
-                    continue
-                asin_set.add(item_obj.asin)
-
-                reviews = Review.objects.filter(item=mem.item)
-
-                ranking_score = senti_BM(query, item_obj)
-                results.append((ranking_score, item_obj, reviews))
-        results.sort(key=lambda element: element[0], reverse=True)
-
-    elif choice == "none":
-        ranking_score = "no ranking"
-        for token in nltk_process(query):
-            indices = Index.objects.filter(word=token).all()
-            if len(indices) == 0:
-                continue
-            for mem in Membership.objects.filter(index=indices.first()).all():
-                results.append((ranking_score, mem.item, Review.objects.filter(item=mem.item)))
 
     return render(request, 'search/result.html',{'query': query, 'results': results, 'choice':choice})
 
