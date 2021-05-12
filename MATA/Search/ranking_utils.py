@@ -187,9 +187,6 @@ def senti_BM_doc(query, item_obj):
                 sia = SentimentIntensityAnalyzer()
                 reviews = Review.objects.filter(item=mem.item).all()
                 if len(reviews) != 0:
-                    # senti_scores_negative = []
-                    # senti_scores_neutral = []
-                    # senti_scores_postive = []
                     senti_scores = []
                     rating_scores = []
                     total_score = []
@@ -200,9 +197,8 @@ def senti_BM_doc(query, item_obj):
                         rating_scores.append(rating)
 
                     senti_scores_norm = []
-                    # senti_norm = np.linalg.norm(senti_scores)
                     for s in senti_scores:
-                        s = (s +1)/2
+                        s = (s+1)/2
                         senti_scores_norm.append(s)
                     print ("senti score:" , senti_scores_norm)
 
@@ -223,7 +219,6 @@ def senti_BM_doc(query, item_obj):
                             neutral_review_ct += 1
                         else:
                             positive_review_ct += 1
-
                     if negative_review_ct == 1: 
                         if positive_review_ct ==2:
                             review_wt = 1
