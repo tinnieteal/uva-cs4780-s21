@@ -3,16 +3,20 @@
 {% block title %}
 Index
 {% endblock %}
-
+{% load static %}
 {% block content %}
 <br>
 <div class="jumbotron">
   <div class="container">
       <h3>Welcome, here is</h3>
-        <h1 class="display-4">Matadata-based Search Engine Project</h1>
-            <div class="card">
-                <div class="card-body">
-                    This is some text within a card body.sadkbasdjo;asbd dbajsl;dba;lsdba;sljdhbasiodbad;oiabdo;iasbdousbbxzklmblm;dbaspioudgadoibdcljsbfpouasgdasdsdasdasafdslvghnodfhandfynapo8ynapdypa8yapfcpfydhio[dgndpouifgghadofnlckpzncuiaswdegfuopahfioa
+        <h1 class="display-4">Matadata-based Search Engine</h1>
+            <div class="card ">
+                <div class="card-body ">
+                    <h3>Our searching engine has three different types of ranking method:</h3>
+                    <h4><b><i style="color:#4574FF";>Standard:</i></b> search the query only consider the relativity of the item title and description with equal weight<hr></h4>
+                    <h4><b><i style="color:#4574FF";>Comment matter:</i></b> combine with the standard ranking method, this method consider other user's review as a factor.<hr></h4>
+                    <h4><b><i style="color:#4574FF";>Mega:</i></b> the ranking method will distinguish the positive review and negative review and give different weight, also consider the rating score from user and combine with corresponding review to determine the weight.<hr></h4>
+                    <p>*The dataset of this project is from Beauty Department in amazon.com</p>
                 </div>
             </div>
             <a href="/search">

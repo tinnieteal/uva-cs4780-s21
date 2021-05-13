@@ -13,24 +13,18 @@ def index(request):
 
 def result(request):
     query = request.POST.get('query')
-
-    print(query, request.POST, request.POST.get('senti_BM25_doc') )
     if request.POST:
-        if 'none' in request.POST:
-            choice = request.POST.get('none')
-            results = search_none(query )
-        elif 'BM25_doc' in request.POST:
-            choice = request.POST.get('BM25_doc')
-            results = search_BM25_doc(query )
-        elif 'BM25_fields' in request.POST:
-            choice = request.POST.get('BM25_fields')
-            results = search_BM25_fields(query )
-        elif 'senti_BM25_doc' in request.POST:
-            choice = request.POST.get('senti_BM25_doc')
-            results = search_senti_BM25_doc(query )
+        if 'Standard' in request.POST:
+            choice = request.POST.get('Standard')
+            results = search_BM25_doc(query)
+        elif 'Comments_matters' in request.POST:
+            choice = request.POST.get('Comments_matters')
+            results = search_BM25_fields(query)
+        elif 'Mega' in request.POST:
+            choice = request.POST.get('Mega')
+            results = search_senti_BM25_doc(query)
         else:
             return None
-
 
     return render(request, 'search/result.html',{'query': query, 'results': results, 'choice':choice})
 
