@@ -172,6 +172,7 @@ def senti_BM_doc(query, item_obj):
     title_sc = title_wt*bm25_title(query, item_obj)
 
     #consider weight for review
+    review_sc = 0
     for token in nltk_process(query):
         indices = Index.objects.filter(word=token).all()
         num_doc = 0
@@ -219,6 +220,7 @@ def senti_BM_doc(query, item_obj):
                             neutral_review_ct += 1
                         else:
                             positive_review_ct += 1
+
                     if negative_review_ct == 1: 
                         if positive_review_ct ==2:
                             review_wt = 1
@@ -258,8 +260,7 @@ def senti_BM_doc(query, item_obj):
                     negative: compound score<=-0.05
                     """
  
-        review_sc += review_wt*(idf(num_doc) * (
-                    (total_freq * (k1 + 1)) / (total_freq + k1 * (1 - b + b * item_length / average_item_length))))
+        review_sc += review_wt*(idf(num_doc) * ((total_freq * (k1 + 1)) / (total_freq + k1 * (1 - b + b * item_length / average_item_length))))
 
     score = review_sc + des_sc + title_sc
 
