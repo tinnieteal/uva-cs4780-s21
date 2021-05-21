@@ -27,6 +27,23 @@ $ python manage.py runserver
 ```
 If you visit http://127.0.0.1:8000/, you should be able to see Maga ready to be tested!
 
+## Model Documentation
+Models(MAGA/Search/models.py)
+- `Item`
+   - `title`, `description`, `asin`, `image`, `title_length`, `desc_length`, `review_length`.
+- `Review`
+   - `content`, `length`, `rating`;
+   - `item`: many-to-one relationship with `Item` model.
+- `Index`
+   - `word`, `des_tf`, `title_tf`, `review_tf`;
+   - `items`: many-to-many relationship with `Item` model.
+- `Membership`
+   - `des_df`, `title_df`, `review_df`;
+   - `item`: many-to-one relationship with `Item` model;
+   - `index`: many-to-one relationship with `Item` model.
+
+`Item` model is where we store the essential information of each product. `Review` model is where we separately store the information of each review. `Index` model is where we build our inverted index. `Membership` model lets us get access to the term frequency of each indexed word. 
+
 
 
 
