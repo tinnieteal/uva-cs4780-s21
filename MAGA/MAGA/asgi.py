@@ -1,5 +1,5 @@
 """
-ASGI config for MATA project.
+ASGI config for MAGA project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MATA.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MAGA.settings')
 
 application = get_asgi_application()
