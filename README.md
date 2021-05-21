@@ -46,7 +46,7 @@ Models(MAGA/Search/models.py)
 
 ## Resources
 Project paper: https://drive.google.com/file/d/1a1wbIx5aL_CH1eKrYehR7vq9PFkaTfDM/view?usp=sharing <br/>
-Project slides: https://drive.google.com/file/d/1a1wbIx5aL_CH1eKrYehR7vq9PFkaTfDM/view?usp=sharing 
+Project slides: https://drive.google.com/file/d/1AuzRFWbxwfs_If-PJwe_p0NFpOUT_3dE/view?usp=sharing
 ## Contact us
 - Tina Chen: tc7nz@virginia.edu
 - Chenlin Liu: cl2trg@virginia.edu
