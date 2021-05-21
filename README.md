@@ -7,13 +7,25 @@
 
 Additionally, Mega will display the products' titles, descriptions, and reviews with **highlights** on the terms that match the input queries in order to provide explainable recommendations. An ASIN number is also provided under each product's image for users to go directly to the product's page on Amazon. 
 
+## Dataset
+The UCSD Amazon Review Dataset under the category “All Beauty” is used Maga. After data cleaning and pre-processing, we are left with 4048 product items in the end. 
+
 ## Setup
-`Clone` or  `pull` the current project from Github:
+`Clone` the current project from Github:
 
 ```
-$ cd ~/cs4780/maga/
-git clone https://github.com/tinnieteal/uva-cs4780-s21.git
+$ mkdir cs4780
+$ git clone https://github.com/tinnieteal/uva-cs4780-s21.git
 ```
+`Locate` the project file:
+```
+$ cd MAGA
+```
+`Run` Localhost:
+```
+$ python manage.py runserver
+```
+If you visit http://127.0.0.1:8000/, you should be able to see Maga ready to be tested!
 
 
 
