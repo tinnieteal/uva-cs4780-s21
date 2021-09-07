@@ -8,7 +8,7 @@ Mega is a matadata-based search engine that aims to provide different search opt
 Additionally, Mega will display the products' titles, descriptions, and reviews with **highlights** on the terms that match the input queries in order to provide explainable recommendations. An ASIN number is also provided under each product's image for users to go directly to the product's page on Amazon. 
 
 ## Dataset
-The UCSD Amazon Review Dataset under the category “All Beauty” is used Maga. After data cleaning and pre-processing, we are left with 4048 product items in the end. 
+The UCSD Amazon Review Dataset under the category “All Beauty” is used by Maga. After data cleaning and pre-processing, we are left with 4048 product items.
 
 ## Setup
 `Clone` the current project from Github:
